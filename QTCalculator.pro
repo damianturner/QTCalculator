@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    entereventfilter.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    entereventfilter.h
 
 FORMS    += mainwindow.ui
