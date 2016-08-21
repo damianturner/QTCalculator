@@ -16,11 +16,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_textEdit_textChanged()
 {
-
+    std::string currText = ui->textEdit->toPlainText().toStdString();
+    if(!currText.empty() && currText.at(currText.size() - 1) == '\n') {
+        QTextCursor cursor = ui->textEdit->textCursor();
+        cursor.deletePreviousChar(); // trims empty line
+        ui->textEdit->setTextCursor(cursor);
+        parseLine();
+    }
 }
 
 std::string parse(std::string input)
 {
+    TODO
     return "parsed" + input;
 }
 

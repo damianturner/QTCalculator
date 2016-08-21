@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTextBlock>
+#include <QTextCursor>
 
 namespace Ui {
 class MainWindow;
