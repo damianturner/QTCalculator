@@ -119,10 +119,6 @@ void MainWindow::on_twoButton_clicked()
     ui->textEdit->insertPlainText(QString::fromStdString("2"));
 }
 
-void MainWindow::on_negativeButton_clicked()
-{
-    ui->textEdit->insertPlainText(QString::fromStdString("(-1)*"));
-}
 
 void MainWindow::on_integrateButton_clicked()
 {
@@ -142,4 +138,9 @@ void MainWindow::on_sixButton_clicked()
 void MainWindow::on_threeButton_clicked()
 {
     ui->textEdit->insertPlainText(QString::fromStdString("3"));
+}
+
+void MainWindow::on_expButton_clicked()
+{
+    ui->textEdit->insertPlainText(QString::fromStdString("^"));
 }
