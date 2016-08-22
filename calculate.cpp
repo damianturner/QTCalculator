@@ -11,13 +11,20 @@ std::string infixToPostfix(const std::string &infix) {
     std::ostringstream outSS;
     std::stack<char> operators;
 
+    bool operatorPossible = true;
+
     char curr;
     for(auto it = infix.begin(); it != infix.end(); ++it) {
         curr = *it;
         if(isdigit(curr) || curr == '.') {
             outSS << curr;
+            operatorPossible = true;
         }
         else if(curr == '(') {
+            if(!operatorPossible) {
+                return "error";
+            }
+            operatorPossible = false;
             operators.push(curr);
         }
         else if(curr == ')') {
@@ -26,8 +33,13 @@ std::string infixToPostfix(const std::string &infix) {
                 operators.pop();
             }
             operators.pop();
+            operatorPossible = true;
         }
         else {
+            if(!operatorPossible) {
+                return "error";
+            }
+            operatorPossible = false;
             outSS << " "; //will seperate digits greater than 9 with space
             if(operators.empty() || operators.top() == '(') {
                 operators.push(curr);
@@ -43,7 +55,7 @@ std::string infixToPostfix(const std::string &infix) {
         }
     }
     while(!operators.empty()) {
-        outSS << " " <<operators.top();
+        outSS << " " << operators.top();
         operators.pop();
     }
     return outSS.str();
@@ -109,8 +121,16 @@ std::string differentiate(const std::string &input) {
 }
 
 std::string evaluate(const std::string &input) {
+    if(input.empty()) {
+        return "error";
+    }
     std::string postfix = infixToPostfix(input);
-    return std::to_string(evaluatePostfix(postfix));
+    if(postfix == "error") {
+        return postfix;
+    }
+    else {
+        return std::to_string(evaluatePostfix(postfix));
+    }
 }
 
 std::string removeSpaces(std::string &str) {

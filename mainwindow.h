@@ -50,8 +50,6 @@ private slots:
 
     void on_twoButton_clicked();
 
-    void on_negativeButton_clicked();
-
     void on_integrateButton_clicked();
 
     void on_nineButton_clicked();
@@ -61,6 +59,8 @@ private slots:
     void on_threeButton_clicked();
 
     void parseLine();
+
+    void on_expButton_clicked();
 
 private:
     Ui::MainWindow *ui;
