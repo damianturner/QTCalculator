@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "calculate.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,10 +26,16 @@ void MainWindow::on_textEdit_textChanged()
     }
 }
 
-std::string parse(std::string input)
+std::string parse(std::string &input)
 {
-    TODO
-    return "parsed" + input;
+    input = removeSpaces(input);
+    if(input.substr(0,2) == "dx") {
+        if(input.substr(0,5) == "dx/dy"){
+            return integrate(input.substr(0,5));
+        }
+        return differentiate(input.substr(0,2));
+    }
+    return evaluate(input);
 }
 
 void MainWindow::parseLine() {
