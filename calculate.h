@@ -1,5 +1,5 @@
-#ifndef SHUNTINGYARD_H
-#define SHUNTINGYARD_H
+#ifndef CALCULATE_H
+#define CALCULATE_H
 
 #include <string>
 
@@ -13,5 +13,6 @@ std::string evaluate(const std::string &input);
 
 bool leftAssociative(char c);
 int precedence(char c);
+double operate(const std::string &operand, double leftOperand, double rightOperand);
 
-#endif // SHUNTINGYARD_H
+#endif // CALCULATE_H

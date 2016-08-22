@@ -14,7 +14,7 @@ std::string infixToPostfix(const std::string &infix) {
     char curr;
     for(auto it = infix.begin(); it != infix.end(); ++it) {
         curr = *it;
-        if(isdigit(curr)) {
+        if(isdigit(curr) || curr == '.') {
             outSS << curr;
         }
         else if(curr == '(') {
@@ -51,7 +51,66 @@ std::string infixToPostfix(const std::string &infix) {
 }
 
 double evaluatePostfix(const std::string &postfix) {
+    std::istringstream inSS(postfix);
+    std::stack<double> operands;
+    double rightOperand;
+    double leftOperand;
+    std::string next;
 
+    while(inSS >> next) {
+        if(std::isdigit(next.at(0))) {
+            operands.push(std::stod(next));
+        }
+        else {
+            rightOperand = operands.top();
+            operands.pop();
+            leftOperand = operands.top();
+            operands.pop();
+            operands.push(operate(next, leftOperand, rightOperand));
+        }
+    }
+    return operands.top();
+}
+
+double operate(const std::string &operand, double leftOperand, double rightOperand) {
+    if(operand == "+") {
+        return leftOperand + rightOperand;
+    }
+    else if(operand == "-") {
+        return leftOperand - rightOperand;
+    }
+    else if(operand == "*") {
+        return leftOperand * rightOperand;
+    }
+    else if(operand == "/") {
+        return leftOperand / rightOperand;
+    }
+    else if(operand == "^") {
+        int i = static_cast<int>(rightOperand);
+        double output = leftOperand;
+        for(int j = 1; j < i; j++) {
+            output *= leftOperand;
+        }
+        return output;
+    }
+    else {
+        return -1;
+    }
+}
+
+std::string integrate(const std::string &input) {
+    //TODO
+    return "";
+}
+
+std::string differentiate(const std::string &input) {
+
+    return "";
+}
+
+std::string evaluate(const std::string &input) {
+    std::string postfix = infixToPostfix(input);
+    return std::to_string(evaluatePostfix(postfix));
 }
 
 std::string removeSpaces(std::string &str) {
@@ -59,10 +118,6 @@ std::string removeSpaces(std::string &str) {
     str.erase(end_pos, str.end());
     return str;
 }
-
-std::string integrate(const std::string &input);
-std::string differentiate(const std::string &input);
-std::string evaluate(const std::string &input);
 
 bool leftAssociative(char c) {
     if(c == '^') return false;
