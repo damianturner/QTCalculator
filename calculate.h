@@ -3,7 +3,8 @@
 
 #include <string>
 
-std::string infixToPostfix(const std::string &infix);
+std::string infixToPostfixOperate(const std::string &infix);
+std::string infixToPostfixDifferentiate(const std::string &infix);
 double evaluatePostfix(const std::string &postfix);
 std::string removeSpaces(std::string &input);
 

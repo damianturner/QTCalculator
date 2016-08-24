@@ -31,9 +31,9 @@ std::string parse(std::string &input)
     input = removeSpaces(input);
     if(input.substr(0,2) == "dx") {
         if(input.substr(0,5) == "dx/dy"){
-            return integrate(input.substr(0,5));
+            return integrate(input.substr(5));
         }
-        return differentiate(input.substr(0,2));
+        return differentiate(input.substr(2));
     }
     return evaluate(input);
 }

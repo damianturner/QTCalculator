@@ -3,9 +3,10 @@
 #include <stack>
 #include <cctype>
 
+
 ArithmeticTree::ArithmeticTree(std::string input)
 {
-    std::istringstream inSS;
+    std::istringstream inSS(input);
     std::stack<std::unique_ptr<TreeNode> > nodes;
 
     std::string curr;
@@ -15,7 +16,7 @@ ArithmeticTree::ArithmeticTree(std::string input)
     while(inSS >> curr) {
         coe = 0;
         pow = 0;
-        if(curr.at(0) != 'x' || !std::isdigit(curr.at(0))) {
+        if(curr.at(0) != 'x' && !std::isdigit(curr.at(0))) {
             currPtr = std::make_unique<TreeNode>(curr.at(0));
             currPtr->right = std::move(nodes.top());
             nodes.pop();
@@ -24,7 +25,7 @@ ArithmeticTree::ArithmeticTree(std::string input)
         }
         else {
             int i = 0;
-            while(std::isdigit(curr.at(i))) {
+            while(i < curr.size() && std::isdigit(curr.at(i))) {
                 ++i;
             }
             if(i > 0) {
@@ -37,12 +38,15 @@ ArithmeticTree::ArithmeticTree(std::string input)
             if(curr.size() == 1) {
                 pow = 1;
             }
+            else if (curr.empty()) {
+                pow = 0;
+            }
             else {
                 pow = std::stoi(curr.substr(2));
             }
             currPtr = std::make_unique<TreeNode>(coe, pow);
         }
-        nodes.push(currPtr);
+        nodes.push(std::move(currPtr));
     }
     root = std::move(nodes.top());
 }
@@ -74,11 +78,12 @@ std::string ArithmeticTree::differentiate(TreeNode* curr) {
         if(curr->power == 0) {
             outSS << "0";
         }
-        if(curr->power == 1) {
+        else if(curr->power == 1) {
             outSS << std::to_string(curr->coefficient);
         }
-
+        else {
         outSS << curr->power * curr->coefficient << "x^" << curr->power - 1;
+        }
     }
     return outSS.str();
 }

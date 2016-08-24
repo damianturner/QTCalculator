@@ -5,7 +5,8 @@
 #include <stack>
 #include <cctype>
 
-//
+//ignores variable x and operator ^ when converting to postfix
+//formats string "coe*x^pow  operator  coe*x^pow"  in form "coe*x^pow  coe*x^pow  operator"
 std::string infixToPostfixDifferentiate(const std::string &infix) {
 
     std::ostringstream outSS;
@@ -62,7 +63,8 @@ std::string infixToPostfixDifferentiate(const std::string &infix) {
 
 }
 
-std::string infixToPostfix(const std::string &infix) {
+//formats in standard postfix
+std::string infixToPostfixOperate(const std::string &infix) {
 
     std::ostringstream outSS;
     std::stack<char> operators;
@@ -171,11 +173,14 @@ std::string integrate(const std::string &input) {
     return "";
 }
 
+
 std::string differentiate(const std::string &input) {
     if(input.empty()) {
         return "error";
     }
-    std::string postfix = infixToPostfix(input);
+
+    std::string postfix = infixToPostfixDifferentiate(input);
+
     if(postfix == "error") {
         return postfix;
     }
@@ -188,7 +193,7 @@ std::string evaluate(const std::string &input) {
     if(input.empty()) {
         return "error";
     }
-    std::string postfix = infixToPostfix(input);
+    std::string postfix = infixToPostfixOperate(input);
     if(postfix == "error") {
         return postfix;
     }
