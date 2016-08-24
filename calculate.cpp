@@ -1,10 +1,66 @@
 #include "calculate.h"
+#include "arithmetictree.h"
 #include <sstream>
 #include <algorithm>
 #include <stack>
 #include <cctype>
 
+//
+std::string infixToPostfixDifferentiate(const std::string &infix) {
 
+    std::ostringstream outSS;
+    std::stack<char> operators;
+
+    bool operatorPossible = true;
+
+    char curr;
+    for(auto it = infix.begin(); it != infix.end(); ++it) {
+        curr = *it;
+        if(isdigit(curr) || curr == 'x' || curr == '^') {
+            outSS << curr;
+            operatorPossible = true;
+        }
+        else if(curr == '(') {
+            if(!operatorPossible) {
+                return "error";
+            }
+            operatorPossible = false;
+            operators.push(curr);
+        }
+        else if(curr == ')') {
+            while(operators.top() != '(') {
+                outSS << operators.top() << " ";
+                operators.pop();
+            }
+            operators.pop();
+            operatorPossible = true;
+        }
+        else {
+            if(!operatorPossible) {
+                return "error";
+            }
+            operatorPossible = false;
+            outSS << " "; //will seperate digits greater than 9 with space
+            if(operators.empty() || operators.top() == '(') {
+                operators.push(curr);
+            }
+            else {
+                while(!operators.empty() && operators.top() != '('
+                    && (leftAssociative(curr) && precedence(curr) <= precedence(operators.top())) || (!leftAssociative(curr) && precedence(curr) < precedence(operators.top()))) {
+                            outSS << operators.top() << " ";
+                            operators.pop();
+                    }
+                operators.push(curr);
+            }
+        }
+    }
+    while(!operators.empty()) {
+        outSS << " " << operators.top();
+        operators.pop();
+    }
+    return outSS.str();
+
+}
 
 std::string infixToPostfix(const std::string &infix) {
 
@@ -116,8 +172,16 @@ std::string integrate(const std::string &input) {
 }
 
 std::string differentiate(const std::string &input) {
+    if(input.empty()) {
+        return "error";
+    }
+    std::string postfix = infixToPostfix(input);
+    if(postfix == "error") {
+        return postfix;
+    }
 
-    return "";
+    ArithmeticTree tree(postfix);
+    return tree.differentiate();
 }
 
 std::string evaluate(const std::string &input) {

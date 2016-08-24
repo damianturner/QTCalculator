@@ -137,6 +137,15 @@
      </item>
      <item row="0" column="3">
       <widget class="QPushButton" name="integrateButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Not implemented</string>
+       </property>
+       <property name="toolTipDuration">
+        <number>-1</number>
+       </property>
        <property name="text">
         <string>dx/dy</string>
        </property>
@@ -151,6 +160,12 @@
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="diffButton">
+       <property name="toolTip">
+        <string>Only supports fully simplified expressions</string>
+       </property>
+       <property name="toolTipDuration">
+        <number>-1</number>
+       </property>
        <property name="text">
         <string>dx</string>
        </property>

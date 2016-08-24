@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    calculate.cpp
+    calculate.cpp \
+    arithmetictree.cpp
 
 HEADERS  += mainwindow.h \
-    calculate.h
+    calculate.h \
+    arithmetictree.h
 
 FORMS    += mainwindow.ui
